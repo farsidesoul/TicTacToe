@@ -11,7 +11,6 @@ namespace TicTacToe
     {
         public int movesMade = 0;
 
-        private Rectangle[,] slots = new Rectangle[3,3];
         private Holder[,] holders = new Holder[3, 3];
 
         // Board squares, X = X, O = O, B = Blank square
@@ -25,7 +24,6 @@ namespace TicTacToe
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    slots[i, j] = new Rectangle(i * 167, j * 167, 167, 167);
                     holders[i, j] = new Holder();
                     holders[i, j].setValue(B);
                     holders[i, j].setLocation(new Point(i, j));
@@ -67,18 +65,87 @@ namespace TicTacToe
                     y = 2;
                 }
 
-                movesMade++;
-
                 if (movesMade % 2 == 0)
                 {
                     GFX.drawX(new Point(x, y));
+                    holders[x, y].setValue(X);
+                    if (detectRow())
+                    {
+                        MessageBox.Show("X Wins!");
+                    }
                 }
                 else
                 {
                     GFX.drawO(new Point(x, y));
+                    holders[x, y].setValue(O);
+                    if (detectRow())
+                    {
+                        MessageBox.Show("O Wins!");
+                    }
+                }
+
+                movesMade++;
+            }
+
+        }
+
+        public bool detectRow()
+        {
+            bool isWon = false;
+
+            for (int x = 0; x < 3; x++)
+            {
+                if (holders[x, 0].getValue() == X && holders[x, 1].getValue() == X && holders[x, 2].getValue() == X)
+                {
+                    return true;
+                }
+
+                if (holders[x, 0].getValue() == O && holders[x, 1].getValue() == O && holders[x, 2].getValue() == O)
+                {
+                    return true;
+                }
+
+                // Detects diagonal lines
+                switch (x)
+                {
+                    case 0:
+                        if (holders[x,0].getValue() == X && holders[x+1,1].getValue() == X && holders[x+2,2].getValue() == X)
+                        {
+                            return true;
+                        }
+                        if (holders[x, 0].getValue() == O && holders[x + 1, 1].getValue() == O && holders[x + 2, 2].getValue() == O)
+                        {
+                            return true;
+                        }
+                        break;
+
+                    case 2:
+                        if (holders[x, 0].getValue() == X && holders[x - 1, 1].getValue() == X && holders[x - 2, 2].getValue() == X)
+                        {
+                            return true;
+                        }
+                        if (holders[x, 0].getValue() == O && holders[x - 1, 1].getValue() == O && holders[x - 2, 2].getValue() == O)
+                        {
+                            return true;
+                        }
+                        break;
                 }
             }
 
+            for (int y = 0; y < 3; y++)
+            {
+                if (holders[0, y].getValue() == X && holders[1, y].getValue() == X && holders[2, y].getValue() == X)
+                {
+                    return true;
+                }
+
+                if (holders[0, y].getValue() == O && holders[1, y].getValue() == O && holders[2, y].getValue() == O)
+                {
+                    return true;
+                }
+            }
+
+                return isWon;
         }
     }
 
