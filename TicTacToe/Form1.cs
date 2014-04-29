@@ -34,5 +34,21 @@ namespace TicTacToe
             mouse = panel1.PointToClient(mouse);
             theBoard.detectHit(mouse);
         }
+
+        private void rButton_Click(object sender, EventArgs e)
+        {
+            theBoard.reset();
+            GFX.setUpCanvas();
+        }
+
+        private void aButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This tic-tac-toe game was made by Darron with the assistance of Sam from C# demos.");
+        }
+
+        private void eButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

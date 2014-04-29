@@ -72,6 +72,8 @@ namespace TicTacToe
                     if (detectRow())
                     {
                         MessageBox.Show("X Wins!");
+                        reset();
+                        GFX.setUpCanvas();
                     }
                 }
                 else
@@ -81,6 +83,8 @@ namespace TicTacToe
                     if (detectRow())
                     {
                         MessageBox.Show("O Wins!");
+                        reset();
+                        GFX.setUpCanvas();
                     }
                 }
 
@@ -146,6 +150,12 @@ namespace TicTacToe
             }
 
                 return isWon;
+        }
+
+        public void reset()
+        {
+            holders = new Holder[3, 3];
+            initBoard();
         }
     }
 
